@@ -1,4 +1,0 @@
-D:/5-learningNotes/1-C++/C++Programming/project/lamdbaFun/build/CMakeFiles/01_lamdba.dir
-D:/5-learningNotes/1-C++/C++Programming/project/lamdbaFun/build/CMakeFiles/run.dir
-D:/5-learningNotes/1-C++/C++Programming/project/lamdbaFun/build/CMakeFiles/ALL_BUILD.dir
-D:/5-learningNotes/1-C++/C++Programming/project/lamdbaFun/build/CMakeFiles/ZERO_CHECK.dir
