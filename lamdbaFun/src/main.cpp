@@ -31,8 +31,36 @@ std::function<int(int, int)> func_task2 = [](int a, int b) {
 };
 
 //Task 3: write lambda that return lambda
+//std::function<std::function<int(int)>(int)> func_task3 = [](int a) {
 auto func_task3 = [](int a) {
-	return [a](int b) {return a * b;};
+	a++;
+	return [&](int b) {return a * b;};
+};
+
+std::function<std::function<int(int)>(int)> func_task3_adapt = [](int x) {
+		x++;
+		return [x](int y) {return x * y;};
+};
+
+
+//Task 4: Write command list (vector of std::function of lambdas)
+
+//Define the base class interface
+class Command {
+public:
+	virtual void execute() = 0;
+	virtual ~Command() = default;
+};
+//Create concrete command classes
+class ConcreteCommand : public Command {
+public:
+	ConcreteCommand(int value) : m_value(value) {}
+	void execute() override {
+		std::cout << "Executing command with value: " << m_value << std::endl;
+	}
+
+private:
+	int m_value;
 };
 
 
@@ -79,10 +107,25 @@ int main(){
 	auto lambda3 = func_task3(5);
 	std::cout << "The output of lambda3 is: " << lambda3(9) << std::endl;
 
+	auto lambda3_adapt = func_task3_adapt(5);
+	std::cout << "The output of lambda3_adapt is: " << lambda3_adapt(9) << std::endl;
 
+	//create a command list
+	std::vector<std::function<void(int, int)>> commandList;
+	commandList.push_back([](int a, int b) {std::cout << "Command 1 a + b: " << a + b << std::endl;});
+	commandList.push_back([](int a, int b) {std::cout << "Command 2 a - b: " << a - b << std::endl;});
+	commandList.push_back([](int a, int b) {std::cout << "Command 3 a * b: " << a * b << std::endl;});
+																	  
 
-	//Task 4: Write command list (vector of std::function of lambdas)
+	ConcreteCommand concreteCommandObject(42);
+	commandList.push_back(std::bind(&ConcreteCommand::execute, concreteCommandObject));
 
+	int a = 1;
+	int b = 2;
+	// Execute all commands in the command list
+	for (const auto& command : commandList) {
+		command(a, b);
+	};
 
-	
+	return 0;
 }
