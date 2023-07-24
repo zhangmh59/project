@@ -5,7 +5,7 @@
 #include<chrono>
 
 
-//Task 1: Write function that can receive lambda by parameter, execute the lambda and measure the execution time
+//Task 1.1: Write function that can receive lambda by parameter, execute the lambda and measure the execution time
 template<typename F>
 void measureTime(F func) {
 	auto startTime = std::chrono::steady_clock::now();
@@ -15,6 +15,19 @@ void measureTime(F func) {
 
 	std::cout << "The execution time of task 1 is： " << duration << std::endl;
 }
+
+
+//another way for task 1 (don't use template)
+auto add = [](float a, float b) {return a + b;};
+auto mul = [](float a, float b) {return a * b;};
+
+//function pointer type, 使用using关键字实现和template相似的功能
+using FCE = float(*)(float, float);
+
+
+void fce(FCE f, float a, float b) {
+	std::cerr << "fce: " << f(a, b) << std::endl;
+};
 
 
 //Task 2: Write recursive lambda (lambda that calls itself)
@@ -103,6 +116,10 @@ int main(){
 	
 	measureTime([](float a, float b) {std::cout << "The output from lambda function: " << a + b << std::endl;});
 	func_task2(3, 2);
+
+	fce(add, 10, 20);
+	fce(mul, 10, 20);
+	return 0;
 
 	auto lambda3 = func_task3(5);
 	std::cout << "The output of lambda3 is: " << lambda3(9) << std::endl;
